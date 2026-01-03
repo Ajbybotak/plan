@@ -46,13 +46,11 @@
 
     <label for="userDay">Wybierz dzień:</label>
     <select id="userDay">
-        <option value="Niedziela">Niedziela</option>
         <option value="Poniedziałek">Poniedziałek</option>
         <option value="Wtorek">Wtorek</option>
         <option value="Środa">Środa</option>
         <option value="Czwartek">Czwartek</option>
         <option value="Piątek">Piątek</option>
-        <option value="Sobota">Sobota</option>
     </select>
 
     <label for="userTime">Wybierz godzinę:</label>
@@ -63,14 +61,15 @@
         <p><strong>Zmienna 2:</strong> <span id="variable2">2A</span></p>
         <p><strong>Czas:</strong> <span id="czas">12:00</span></p>
         <p><strong>Dzień:</strong> <span id="dzien">Poniedziałek</span></p>
-        <p><strong>Twoja następna lekcja to:</strong> CHEM</p>
-        <p><strong>Ktoś teraz idzie z:</strong> BIOL do EDUK</p>
+        <p><strong>Twoja następna lekcja to:</strong> <span id="nextLesson">CHEM</span></p>
         <p><strong>Lekcja:</strong> <span id="lekcja">Brak</span></p>
     </div>
 
     <script>
         // Tablica na przerwy
         let przerwy = [];
+        // Obiekt na dane z plików 2A.txt i 2C.txt
+        let lessonsData = {};
 
         // Funkcja do wczytywania danych z pliku przerwy.txt z GitHub
         function loadPrzerwy() {
@@ -87,10 +86,38 @@
                 .catch(error => console.error('Błąd wczytywania pliku przerwy.txt:', error));
         }
 
-        // Funkcja do ustawienia zmiennych na podstawie wyboru
+        // Funkcja do wczytywania plików 2A.txt i 2C.txt z GitHub
+        function loadLessonsData(className) {
+            const fileName = className === '2A' ? '2A.txt' : '2C.txt';
+            const githubRepo = `https://raw.githubusercontent.com/Ajbybotak/plan/main/${fileName}`;
+            fetch(githubRepo)
+                .then(response => response.text())
+                .then(data => {
+                    lessonsData[className] = parseLessonsData(data);
+                })
+                .catch(error => console.error(`Błąd wczytywania pliku ${fileName}:`, error));
+        }
+
+        // Funkcja do parsowania danych z pliku 2A.txt lub 2C.txt
+        function parseLessonsData(data) {
+            const days = data.split('\n\n');
+            const lessons = {};
+
+            days.forEach(day => {
+                const [dayName, ...subjects] = day.split('\n');
+                lessons[dayName] = subjects;
+            });
+
+            return lessons;
+        }
+
+        // Funkcja do ustawiania zmiennych na podstawie wyboru
         function updateVariables() {
             var variable1 = document.getElementById('option1').value; // Wartość z pierwszego menu
             var variable2 = document.getElementById('option2').value; // Wartość z drugiego menu
+
+            // Wczytanie danych lekcji dla odpowiedniej klasy
+            loadLessonsData(variable1);
 
             // Ustawienie zmiennych na stronie
             document.getElementById('variable1').textContent = variable1;
@@ -109,6 +136,10 @@
             // Sprawdzenie, która lekcja (przerwa) obejmuje podaną godzinę
             var lekcja = getLekcja(userTime);
             document.getElementById('lekcja').textContent = lekcja !== -1 ? lekcja : "Brak";
+
+            // Wyświetlenie następnej lekcji
+            var nextLesson = getNextLesson(userDay, lekcja);
+            document.getElementById('nextLesson').textContent = nextLesson || "Brak";
         }
 
         // Funkcja do przypisania numeru lekcji na podstawie godziny
@@ -130,6 +161,14 @@
             return time >= start && time <= end;
         }
 
+        // Funkcja do pobrania następnej lekcji na podstawie dnia i numeru lekcji
+        function getNextLesson(day, lekcja) {
+            if (!lessonsData[document.getElementById('variable1').value]) return null;
+
+            const dayLessons = lessonsData[document.getElementById('variable1').value][day];
+            return dayLessons && dayLessons[lekcja - 1] || "BRAK";
+        }
+
         // Ustawienie nasłuchiwania na zmiany w rozwijanych menu
         document.getElementById('option1').addEventListener('change', updateVariables);
         document.getElementById('option2').addEventListener('change', updateVariables);
@@ -140,8 +179,6 @@
 
         // Na początku ustawiamy zmienne
         updateVariables();
-
-        // Ładujemy dane z pliku przerwy.txt
         loadPrzerwy();
 
     </script>
