@@ -41,6 +41,8 @@
     <div class="result">
         <p><strong>Zmienna 1:</strong> <span id="variable1">2A</span></p>
         <p><strong>Zmienna 2:</strong> <span id="variable2">2A</span></p>
+        <p><strong>Czas:</strong> <span id="czas">00:00</span></p>
+        <p><strong>Dzień:</strong> <span id="dzien">Poniedziałek</span></p>
     </div>
 
     <script>
@@ -54,12 +56,33 @@
             document.getElementById('variable2').textContent = variable2;
         }
 
+        // Funkcja do aktualizacji godziny i dnia
+        function updateTimeAndDay() {
+            var currentDate = new Date();
+            
+            // Aktualny czas
+            var hours = currentDate.getHours().toString().padStart(2, '0'); // Godzina z 2 cyframi
+            var minutes = currentDate.getMinutes().toString().padStart(2, '0'); // Minuty z 2 cyframi
+            var time = hours + ':' + minutes;
+
+            // Aktualny dzień tygodnia
+            var days = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"];
+            var day = days[currentDate.getDay()];
+
+            // Ustawienie zmiennych "czas" i "dzien"
+            document.getElementById('czas').textContent = time;
+            document.getElementById('dzien').textContent = day;
+        }
+
         // Ustawienie nasłuchiwania na zmiany w rozwijanych menu
         document.getElementById('option1').addEventListener('change', updateVariables);
         document.getElementById('option2').addEventListener('change', updateVariables);
 
         // Na początku ustawiamy zmienne
         updateVariables();
+
+        // Ustawienie aktualizacji godziny i dnia co sekundę
+        setInterval(updateTimeAndDay, 1000); // Aktualizuj co 1 sekundę
     </script>
 
 </body>
