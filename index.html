@@ -72,30 +72,32 @@
         let lessonsData = {};
 
         // Funkcja do wczytywania danych z pliku przerwy.txt z GitHub
-        function loadPrzerwy() {
+        async function loadPrzerwy() {
             const githubRepo = 'https://raw.githubusercontent.com/Ajbybotak/plan/main/przerwy.txt';
-            fetch(githubRepo)
-                .then(response => response.text()) // Odczytujemy zawartość pliku jako tekst
-                .then(data => {
-                    // Przetwarzanie danych z pliku na obiekt
-                    przerwy = data.split('\n').map(line => {
-                        const [start, end] = line.split(' ');
-                        return { start, end };
-                    });
-                })
-                .catch(error => console.error('Błąd wczytywania pliku przerwy.txt:', error));
+            try {
+                const response = await fetch(githubRepo);
+                const data = await response.text();
+                // Przetwarzanie danych z pliku na obiekt
+                przerwy = data.split('\n').map(line => {
+                    const [start, end] = line.split(' ');
+                    return { start, end };
+                });
+            } catch (error) {
+                console.error('Błąd wczytywania pliku przerwy.txt:', error);
+            }
         }
 
         // Funkcja do wczytywania plików 2A.txt i 2C.txt z GitHub
-        function loadLessonsData(className) {
+        async function loadLessonsData(className) {
             const fileName = className === '2A' ? '2A.txt' : '2C.txt';
             const githubRepo = `https://raw.githubusercontent.com/Ajbybotak/plan/main/${fileName}`;
-            fetch(githubRepo)
-                .then(response => response.text())
-                .then(data => {
-                    lessonsData[className] = parseLessonsData(data);
-                })
-                .catch(error => console.error(`Błąd wczytywania pliku ${fileName}:`, error));
+            try {
+                const response = await fetch(githubRepo);
+                const data = await response.text();
+                lessonsData[className] = parseLessonsData(data);
+            } catch (error) {
+                console.error(`Błąd wczytywania pliku ${fileName}:`, error);
+            }
         }
 
         // Funkcja do parsowania danych z pliku 2A.txt lub 2C.txt
@@ -112,12 +114,12 @@
         }
 
         // Funkcja do ustawiania zmiennych na podstawie wyboru
-        function updateVariables() {
+        async function updateVariables() {
             var variable1 = document.getElementById('option1').value; // Wartość z pierwszego menu
             var variable2 = document.getElementById('option2').value; // Wartość z drugiego menu
 
             // Wczytanie danych lekcji dla odpowiedniej klasy
-            loadLessonsData(variable1);
+            await loadLessonsData(variable1);
 
             // Ustawienie zmiennych na stronie
             document.getElementById('variable1').textContent = variable1;
@@ -163,10 +165,11 @@
 
         // Funkcja do pobrania następnej lekcji na podstawie dnia i numeru lekcji
         function getNextLesson(day, lekcja) {
-            if (!lessonsData[document.getElementById('variable1').value]) return null;
+            const lessonsForClass = lessonsData[document.getElementById('variable1').value];
+            if (!lessonsForClass) return "BRAK";
 
-            const dayLessons = lessonsData[document.getElementById('variable1').value][day];
-            return dayLessons && dayLessons[lekcja - 1] || "BRAK";
+            const dayLessons = lessonsForClass[day];
+            return dayLessons ? dayLessons[lekcja - 1] : "BRAK";
         }
 
         // Ustawienie nasłuchiwania na zmiany w rozwijanych menu
