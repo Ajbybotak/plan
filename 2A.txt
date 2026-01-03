@@ -1,4 +1,4 @@
-PON:
+PON
 MAT
 CHEM
 BIOL
@@ -8,7 +8,7 @@ FIZ
 FIZ
 BRAK
 
-WT:
+WT
 BRAK
 HIS
 JANG
@@ -18,7 +18,7 @@ BIOL
 CHEM
 NIEM
 
-SR:
+SR
 WF
 WF
 BIZ
@@ -28,7 +28,7 @@ MAT
 MAT
 INF
 
-CZW:
+CZW
 JANG
 MAT
 GEO
@@ -38,7 +38,7 @@ POL
 EDUK
 EDUK
 
-PIA:
+PIA
 BRAK
 REL
 MAT
