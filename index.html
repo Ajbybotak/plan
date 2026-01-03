@@ -17,6 +17,10 @@
             padding: 5px;
             margin-top: 5px;
         }
+        input {
+            padding: 5px;
+            margin-top: 5px;
+        }
         .result {
             margin-top: 20px;
         }
@@ -38,13 +42,29 @@
         <option value="2C">2C</option>
     </select>
 
+    <h3>Ustaw własny dzień i godzinę:</h3>
+
+    <label for="userDay">Wybierz dzień:</label>
+    <select id="userDay">
+        <option value="Niedziela">Niedziela</option>
+        <option value="Poniedziałek">Poniedziałek</option>
+        <option value="Wtorek">Wtorek</option>
+        <option value="Środa">Środa</option>
+        <option value="Czwartek">Czwartek</option>
+        <option value="Piątek">Piątek</option>
+        <option value="Sobota">Sobota</option>
+    </select>
+
+    <label for="userTime">Wybierz godzinę:</label>
+    <input type="time" id="userTime" value="12:00">
+
     <div class="result">
         <p><strong>Zmienna 1:</strong> <span id="variable1">2A</span></p>
         <p><strong>Zmienna 2:</strong> <span id="variable2">2A</span></p>
         <p><strong>Czas:</strong> <span id="czas">00:00</span></p>
         <p><strong>Dzień:</strong> <span id="dzien">Poniedziałek</span></p>
-        <p><strong>Twoja następna lekcja to:</strong> <span id="lesson">CHEM</span></p>
-        <p><strong>Ktoś teraz idzie z:</strong> <span id="route">BIOL do EDUK</span></p>
+        <p><strong>Twoja następna lekcja to:</strong> CHEM</p>
+        <p><strong>Ktoś teraz idzie z:</strong> BIOL do EDUK</p>
     </div>
 
     <script>
@@ -58,7 +78,7 @@
             document.getElementById('variable2').textContent = variable2;
         }
 
-        // Funkcja do aktualizacji godziny i dnia
+        // Funkcja do ustawienia czasu
         function updateTimeAndDay() {
             var currentDate = new Date();
             
@@ -76,9 +96,23 @@
             document.getElementById('dzien').textContent = day;
         }
 
+        // Funkcja do ustawiania dnia i godziny na podstawie wyboru użytkownika
+        function updateUserTimeAndDay() {
+            var userDay = document.getElementById('userDay').value; // Wybrany dzień
+            var userTime = document.getElementById('userTime').value; // Wybrana godzina
+
+            // Ustawienie zmiennych "czas" i "dzien" na podstawie wyboru użytkownika
+            document.getElementById('dzien').textContent = userDay;
+            document.getElementById('czas').textContent = userTime;
+        }
+
         // Ustawienie nasłuchiwania na zmiany w rozwijanych menu
         document.getElementById('option1').addEventListener('change', updateVariables);
         document.getElementById('option2').addEventListener('change', updateVariables);
+
+        // Ustawienie nasłuchiwania na zmiany w użytkownikowym dniu i godzinie
+        document.getElementById('userDay').addEventListener('change', updateUserTimeAndDay);
+        document.getElementById('userTime').addEventListener('input', updateUserTimeAndDay);
 
         // Na początku ustawiamy zmienne
         updateVariables();
