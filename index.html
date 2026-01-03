@@ -61,7 +61,7 @@
     <div class="result">
         <p><strong>Zmienna 1:</strong> <span id="variable1">2A</span></p>
         <p><strong>Zmienna 2:</strong> <span id="variable2">2A</span></p>
-        <p><strong>Czas:</strong> <span id="czas">00:00</span></p>
+        <p><strong>Czas:</strong> <span id="czas">12:00</span></p>
         <p><strong>Dzień:</strong> <span id="dzien">Poniedziałek</span></p>
         <p><strong>Twoja następna lekcja to:</strong> CHEM</p>
         <p><strong>Ktoś teraz idzie z:</strong> BIOL do EDUK</p>
@@ -76,24 +76,6 @@
             // Ustawienie zmiennych na stronie
             document.getElementById('variable1').textContent = variable1;
             document.getElementById('variable2').textContent = variable2;
-        }
-
-        // Funkcja do ustawienia czasu
-        function updateTimeAndDay() {
-            var currentDate = new Date();
-            
-            // Aktualny czas
-            var hours = currentDate.getHours().toString().padStart(2, '0'); // Godzina z 2 cyframi
-            var minutes = currentDate.getMinutes().toString().padStart(2, '0'); // Minuty z 2 cyframi
-            var time = hours + ':' + minutes;
-
-            // Aktualny dzień tygodnia
-            var days = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"];
-            var day = days[currentDate.getDay()];
-
-            // Ustawienie zmiennych "czas" i "dzien"
-            document.getElementById('czas').textContent = time;
-            document.getElementById('dzien').textContent = day;
         }
 
         // Funkcja do ustawiania dnia i godziny na podstawie wyboru użytkownika
@@ -116,9 +98,6 @@
 
         // Na początku ustawiamy zmienne
         updateVariables();
-
-        // Ustawienie aktualizacji godziny i dnia co sekundę
-        setInterval(updateTimeAndDay, 1000); // Aktualizuj co 1 sekundę
     </script>
 
 </body>
