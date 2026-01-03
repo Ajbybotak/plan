@@ -160,7 +160,11 @@
             const mappedDay = dayMapping[day];
 
             const dayLessons = lessonsForClass[mappedDay];
-            return dayLessons && dayLessons[lekcja - 1] || "BRAK";
+            if (dayLessons && dayLessons[lekcja - 1]) {
+                return dayLessons[lekcja - 1];
+            } else {
+                return "BRAK";
+            }
         }
 
         // Ustawienie nasłuchiwania na zmiany w rozwijanych menu
