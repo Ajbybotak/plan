@@ -65,9 +65,22 @@
         <p><strong>Dzień:</strong> <span id="dzien">Poniedziałek</span></p>
         <p><strong>Twoja następna lekcja to:</strong> CHEM</p>
         <p><strong>Ktoś teraz idzie z:</strong> BIOL do EDUK</p>
+        <p><strong>Lekcja:</strong> <span id="lekcja">Brak</span></p>
     </div>
 
     <script>
+        // Zakładając, że mamy dane przerw zapisane w zmiennej
+        const przerwy = [
+            { start: "8:00", end: "8:05" },
+            { start: "8:50", end: "9:00" },
+            { start: "9:45", end: "9:55" },
+            { start: "10:40", end: "11:00" },
+            { start: "11:45", end: "11:55" },
+            { start: "12:40", end: "12:50" },
+            { start: "13:35", end: "13:45" },
+            { start: "14:30", end: "14:50" }
+        ];
+
         // Funkcja do ustawienia zmiennych na podstawie wyboru
         function updateVariables() {
             var variable1 = document.getElementById('option1').value; // Wartość z pierwszego menu
@@ -86,6 +99,29 @@
             // Ustawienie zmiennych "czas" i "dzien" na podstawie wyboru użytkownika
             document.getElementById('dzien').textContent = userDay;
             document.getElementById('czas').textContent = userTime;
+
+            // Sprawdzenie, która lekcja (przerwa) obejmuje podaną godzinę
+            var lekcja = getLekcja(userTime);
+            document.getElementById('lekcja').textContent = lekcja !== -1 ? lekcja : "Brak";
+        }
+
+        // Funkcja do przypisania numeru lekcji na podstawie godziny
+        function getLekcja(time) {
+            for (let i = 0; i < przerwy.length; i++) {
+                const start = przerwy[i].start;
+                const end = przerwy[i].end;
+
+                // Sprawdzenie, czy podana godzina mieści się w przedziale przerwy
+                if (isTimeInRange(time, start, end)) {
+                    return i + 1; // Lekcja zaczyna się od 1
+                }
+            }
+            return -1; // Jeśli nie ma pasującej lekcji
+        }
+
+        // Funkcja sprawdzająca, czy godzina mieści się w zakresie
+        function isTimeInRange(time, start, end) {
+            return time >= start && time <= end;
         }
 
         // Ustawienie nasłuchiwania na zmiany w rozwijanych menu
