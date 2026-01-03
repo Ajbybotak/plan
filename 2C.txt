@@ -6,7 +6,7 @@ NIEM
 WF
 INF
 GW
-0
+BRAK
 
 WT:
 CHEM
@@ -36,7 +36,7 @@ WF
 WF
 EDUK
 EDUK
-0
+BRAK
 
 PIA:
 CHEM
@@ -46,4 +46,4 @@ HIS
 JANG
 POL
 POL
-0
+BRAK
