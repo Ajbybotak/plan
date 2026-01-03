@@ -95,6 +95,7 @@
                 const response = await fetch(githubRepo);
                 const data = await response.text();
                 lessonsData[className] = parseLessonsData(data);
+                console.log(`Dane dla ${className}:`, lessonsData[className]);  // Logowanie danych
             } catch (error) {
                 console.error(`Błąd wczytywania pliku ${fileName}:`, error);
             }
@@ -141,7 +142,7 @@
 
             // Wyświetlenie następnej lekcji
             var nextLesson = getNextLesson(userDay, lekcja);
-            document.getElementById('nextLesson').textContent = nextLesson || "Brak";
+            document.getElementById('nextLesson').textContent = nextLesson || "BRAK";
         }
 
         // Funkcja do przypisania numeru lekcji na podstawie godziny
@@ -168,8 +169,18 @@
             const lessonsForClass = lessonsData[document.getElementById('variable1').value];
             if (!lessonsForClass) return "BRAK";
 
-            const dayLessons = lessonsForClass[day];
-            return dayLessons ? dayLessons[lekcja - 1] : "BRAK";
+            // Mapowanie pełnych dni na skróty
+            const dayMapping = {
+                "Poniedziałek": "PON",
+                "Wtorek": "WT",
+                "Środa": "SR",
+                "Czwartek": "CZW",
+                "Piątek": "PIA"
+            };
+            const mappedDay = dayMapping[day];
+
+            const dayLessons = lessonsForClass[mappedDay];
+            return dayLessons && dayLessons[lekcja - 1] || "BRAK";
         }
 
         // Ustawienie nasłuchiwania na zmiany w rozwijanych menu
