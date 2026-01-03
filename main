@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skrypt z rozwijanymi menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        select {
+            padding: 5px;
+            margin: 10px;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Wybierz opcje</h2>
+
+    <label for="option1">Pierwsza opcja:</label>
+    <select id="option1">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+
+    <label for="option2">Druga opcja:</label>
+    <select id="option2">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+
+    <div class="result">
+        <p><strong>Zmienna 1:</strong> <span id="variable1">0</span></p>
+        <p><strong>Zmienna 2:</strong> <span id="variable2">0</span></p>
+    </div>
+
+    <script>
+        // Funkcja do ustawienia zmiennych na podstawie wyboru
+        function updateVariables() {
+            var variable1 = document.getElementById('option1').value; // Wartość z pierwszego menu
+            var variable2 = document.getElementById('option2').value; // Wartość z drugiego menu
+
+            // Ustawienie zmiennych na stronie
+            document.getElementById('variable1').textContent = variable1;
+            document.getElementById('variable2').textContent = variable2;
+        }
+
+        // Ustawienie nasłuchiwania na zmiany w rozwijanych menu
+        document.getElementById('option1').addEventListener('change', updateVariables);
+        document.getElementById('option2').addEventListener('change', updateVariables);
+
+        // Na początku ustawiamy zmienne
+        updateVariables();
+    </script>
+
+</body>
+</html>
