@@ -3,181 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skrypt z rozwijanymi menu</title>
+    <title>Wybór klasy i plan lekcji</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            padding: 20px;
+            margin: 20px;
+            background-color: #f4f4f9;
         }
-        label {
-            display: block;
-            margin-top: 10px;
+        label, select, input {
+            margin-bottom: 10px;
+            font-size: 16px;
         }
-        select {
-            padding: 5px;
-            margin-top: 5px;
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
         }
-        input {
-            padding: 5px;
-            margin-top: 5px;
+        button:hover {
+            background-color: #45a049;
         }
-        .result {
+        .output {
             margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-
-    <h2>Wybierz opcje</h2>
-
-    <label for="option1">Twoja klasa:</label>
-    <select id="option1">
+    <h1>Plan lekcji</h1>
+    
+    <!-- Wybór klasy -->
+    <label for="class">Wybierz klasę:</label>
+    <select id="class">
+        <option value="1A">1A</option>
+        <option value="1B">1B</option>
+        <option value="1C">1C</option>
+        <option value="1D">1D</option>
+        <option value="1E">1E</option>
         <option value="2A">2A</option>
+        <option value="2B">2B</option>
         <option value="2C">2C</option>
+        <option value="2D">2D</option>
+        <option value="2E">2E</option>
+        <option value="3A">3A</option>
+        <option value="3B">3B</option>
+        <option value="3C">3C</option>
+        <option value="3D">3D</option>
+        <option value="3E">3E</option>
+        <option value="4A">4A</option>
+        <option value="4B">4B</option>
+        <option value="4C">4C</option>
+        <option value="4D">4D</option>
+        <option value="4E">4E</option>
     </select>
 
-    <label for="option2">Czyjaś klasa:</label>
-    <select id="option2">
-        <option value="2A">2A</option>
-        <option value="2C">2C</option>
+    <br>
+
+    <!-- Ustawienie godziny -->
+    <label for="time">Podaj godzinę (np. 08:45):</label>
+    <input type="time" id="time">
+
+    <br>
+
+    <!-- Wybór dnia -->
+    <label for="day">Wybierz dzień tygodnia:</label>
+    <select id="day">
+        <option value="poniedziałek">Poniedziałek</option>
+        <option value="wtorek">Wtorek</option>
+        <option value="środa">Środa</option>
+        <option value="czwartek">Czwartek</option>
+        <option value="piątek">Piątek</option>
     </select>
 
-    <h3>Ustaw własny dzień i godzinę:</h3>
+    <br>
 
-    <label for="userDay">Wybierz dzień:</label>
-    <select id="userDay">
-        <option value="Poniedziałek">Poniedziałek</option>
-        <option value="Wtorek">Wtorek</option>
-        <option value="Środa">Środa</option>
-        <option value="Czwartek">Czwartek</option>
-        <option value="Piątek">Piątek</option>
-    </select>
+    <!-- Przycisk do obliczenia -->
+    <button onclick="getNextLesson()">Sprawdź następną lekcję</button>
 
-    <label for="userTime">Wybierz godzinę:</label>
-    <input type="time" id="userTime" value="12:00">
+    <div class="output" id="output"></div>
 
-    <div class="result">
-        <p><strong>Zmienna 1:</strong> <span id="variable1">2A</span></p>
-        <p><strong>Zmienna 2:</strong> <span id="variable2">2A</span></p>
-        <p><strong>Czas:</strong> <span id="czas">12:00</span></p>
-        <p><strong>Dzień:</strong> <span id="dzien">Poniedziałek</span></p>
-        <p><strong>Twoja następna lekcja to:</strong> <span id="nextLesson">CHEM</span></p>
-        <p><strong>Lekcja:</strong> <span id="lekcja">Brak</span></p>
-    </div>
-
-    <script>
-        let przerwy = [];
-        let lessonsData = {};
-
-        // Funkcja do wczytywania plików 2A.txt i 2C.txt
-        async function loadLessonsData(className) {
-            const fileName = className === '2A' ? '2A.txt' : '2C.txt';
-            const githubRepo = `https://raw.githubusercontent.com/Ajbybotak/plan/main/${fileName}`;
-            try {
-                const response = await fetch(githubRepo);
-                const data = await response.text();
-                lessonsData[className] = parseLessonsData(data);
-                console.log(`Dane dla ${className}:`, lessonsData[className]);  // Logowanie danych
-            } catch (error) {
-                console.error(`Błąd wczytywania pliku ${fileName}:`, error);
-            }
-        }
-
-        // Funkcja do parsowania danych z pliku 2A.txt lub 2C.txt
-        function parseLessonsData(data) {
-            const days = data.split('\n\n');  // Rozdzielamy dane na dni
-            const lessons = {};
-
-            days.forEach(day => {
-                const [dayName, ...subjects] = day.split('\n'); // Pierwszy wiersz to dzień, reszta to przedmioty
-                lessons[dayName] = subjects;
-            });
-
-            return lessons;
-        }
-
-        // Funkcja do ustawiania zmiennych na podstawie wyboru
-        async function updateVariables() {
-            const variable1 = document.getElementById('option1').value; // Wartość z pierwszego menu
-            const variable2 = document.getElementById('option2').value; // Wartość z drugiego menu
-
-            // Wczytanie danych lekcji dla odpowiedniej klasy
-            await loadLessonsData(variable1);
-
-            // Ustawienie zmiennych na stronie
-            document.getElementById('variable1').textContent = variable1;
-            document.getElementById('variable2').textContent = variable2;
-        }
-
-        // Funkcja do ustawiania dnia i godziny na podstawie wyboru użytkownika
-        function updateUserTimeAndDay() {
-            const userDay = document.getElementById('userDay').value; // Wybrany dzień
-            const userTime = document.getElementById('userTime').value; // Wybrana godzina
-
-            // Ustawienie zmiennych "czas" i "dzien" na podstawie wyboru użytkownika
-            document.getElementById('dzien').textContent = userDay;
-            document.getElementById('czas').textContent = userTime;
-
-            // Sprawdzenie, która lekcja (przerwa) obejmuje podaną godzinę
-            const lekcja = getLekcja(userTime);
-            document.getElementById('lekcja').textContent = lekcja !== -1 ? lekcja : "Brak";
-
-            // Wyświetlenie następnej lekcji
-            const nextLesson = getNextLesson(userDay, lekcja);
-            document.getElementById('nextLesson').textContent = nextLesson || "BRAK";
-        }
-
-        // Funkcja do przypisania numeru lekcji na podstawie godziny
-        function getLekcja(time) {
-            for (let i = 0; i < przerwy.length; i++) {
-                const start = przerwy[i].start;
-                const end = przerwy[i].end;
-
-                if (isTimeInRange(time, start, end)) {
-                    return i + 1; // Lekcja zaczyna się od 1
-                }
-            }
-            return -1; // Jeśli nie ma pasującej lekcji
-        }
-
-        // Funkcja sprawdzająca, czy godzina mieści się w zakresie
-        function isTimeInRange(time, start, end) {
-            return time >= start && time <= end;
-        }
-
-        // Funkcja do pobrania następnej lekcji na podstawie dnia i numeru lekcji
-        function getNextLesson(day, lekcja) {
-            const lessonsForClass = lessonsData[document.getElementById('variable1').value];
-            if (!lessonsForClass) return "BRAK";
-
-            const dayMapping = {
-                "Poniedziałek": "PON",
-                "Wtorek": "WT",
-                "Środa": "SR",
-                "Czwartek": "CZW",
-                "Piątek": "PIA"
-            };
-            const mappedDay = dayMapping[day];
-
-            const dayLessons = lessonsForClass[mappedDay];
-            if (dayLessons && dayLessons[lekcja - 1]) {
-                return dayLessons[lekcja - 1];
-            } else {
-                return "BRAK";
-            }
-        }
-
-        // Ustawienie nasłuchiwania na zmiany w rozwijanych menu
-        document.getElementById('option1').addEventListener('change', updateVariables);
-        document.getElementById('option2').addEventListener('change', updateVariables);
-
-        // Ustawienie nasłuchiwania na zmiany w użytkownikowym dniu i godzinie
-        document.getElementById('userDay').addEventListener('change', updateUserTimeAndDay);
-        document.getElementById('userTime').addEventListener('input', updateUserTimeAndDay);
-
-        // Na początku ustawiamy zmienne
-        updateVariables();
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
