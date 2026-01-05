@@ -94,7 +94,8 @@ function getNextLesson() {
         if (lessonTimeInMinutes > timeInMinutes) {
             const nextLessonIndex = i-1;
             const nextLesson = timetable[selectedClass][selectedDay][nextLessonIndex];
-            document.getElementById("output").innerText = `Następna lekcja w dniu ${selectedDay}: ${nextLesson} (${lessonTimes[nextLessonIndex]})`;
+            const prevLesson = timetable[selectedClass][selectedDay][nextLessonIndex-1];
+            document.getElementById("output").innerText = `${prevLesson} -> ${nextLesson}`;
             return;
         }
     }
