@@ -92,7 +92,7 @@ function getNextLesson() {
         const lessonTimeInMinutes = lh * 60 + lm;
         
         if (lessonTimeInMinutes > timeInMinutes) {
-            const nextLessonIndex = i;
+            const nextLessonIndex = i-1;
             const nextLesson = timetable[selectedClass][selectedDay][nextLessonIndex-1];
             document.getElementById("output").innerText = `Następna lekcja w dniu ${selectedDay}: ${nextLesson} (${lessonTimes[nextLessonIndex]})`;
             return;
