@@ -1,12 +1,12 @@
 const CACHE_NAME = 'plan-lekcji-cache-v1';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/script.js',
-    '/style.css',
-    '/manifest.json',
-    '/icons/icon-192x192.png',
-    '/icons/icon-512x512.png',
+    '/plan/',
+    '/plan/index.html',
+    '/plan/script.js',
+    '/plan/style.css',
+    '/plan/manifest.json',
+    '/plan/icons/icon-192x192.png',
+    '/plan/icons/icon-512x512.png',
 ];
 
 // Instalacja Service Worker
