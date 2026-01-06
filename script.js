@@ -59,9 +59,9 @@ function getNextLesson() {
     if (!time) return;
 
     const lessonTimes = [
-        "00:00","08:05","09:00","09:55",
-        "11:00","11:55","12:50",
-        "13:45","14:50","23:59"
+        "00:00", "08:05", "09:00", "09:55",
+        "11:00", "11:55", "12:50",
+        "13:45", "14:50", "23:59"
     ];
 
     const [h, m] = time.split(":").map(Number);
@@ -76,6 +76,25 @@ function getNextLesson() {
         }
     }
 
+    // Jeżeli godzina jest przed pierwszą lekcją
+    if (index === -1) {
+        classSelects.forEach(select => {
+            const cls = select.value;
+            const out = document.getElementById("output-" + select.dataset.index);
+
+            if (!timetable[cls]) {
+                out.textContent = "Brak lekcji";
+                return;
+            }
+
+            // Pierwsza lekcja
+            const firstLesson = timetable[cls][day][0];
+            out.textContent = `undefined -> ${firstLesson}`;
+        });
+        return;
+    }
+
+    // Jeśli lekcje są już po godzinie
     classSelects.forEach(select => {
         const cls = select.value;
         const out = document.getElementById("output-" + select.dataset.index);
@@ -91,6 +110,7 @@ function getNextLesson() {
         out.textContent = `${prev} → ${next}`;
     });
 }
+
 
 // ===== URUCHOM NA START =====
 getNextLesson();
