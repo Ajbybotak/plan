@@ -1,129 +1,96 @@
-// Funkcja zapisująca wybraną klasę w localStorage
-document.getElementById('class').addEventListener('change', function() {
-    localStorage.setItem('selectedClass', this.value);
-    getNextLesson(); // Od razu po zmianie klasy sprawdzamy następną lekcję
-});
+// ===== LISTA KLAS =====
+const classes = [
+    "1A","1B","1C","1D","1E",
+    "2A","2B","2C","2D","2E",
+    "3A","3B","3C","3D","3E",
+    "4A","4B","4C","4D","4E"
+];
 
-// Funkcja do ustawienia wybranej klasy po załadowaniu strony
-window.onload = function() {
-    const savedClass = localStorage.getItem('selectedClass');
-    if (savedClass) {
-        document.getElementById('class').value = savedClass;
-        getNextLesson(); // Uruchamiamy funkcję przy załadowaniu strony, jeśli klasa była zapisana
-    }
-};
-
-// Funkcja zapisująca godzinę w localStorage i wywołująca getNextLesson
-document.getElementById('time').addEventListener('change', function() {
-    getNextLesson(); // Od razu po zmianie godziny sprawdzamy następną lekcję
-});
-
-// Funkcja zapisująca dzień w localStorage i wywołująca getNextLesson
-document.getElementById('day').addEventListener('change', function() {
-    getNextLesson(); // Od razu po zmianie dnia sprawdzamy następną lekcję
-});
-
-// Przykładowy plan lekcji dla klas na różne dni tygodnia
+// ===== PLAN LEKCJI (SKRÓCONY PRZYKŁAD) =====
 const timetable = {
     "1A": {
-        "poniedziałek": [
-            "Matematyka", "Język polski", "Historia", "Biologia", "Chemia", "Fizyka", "Informatyka", "W-F"
-        ],
-        "wtorek": [
-            "Język polski", "Biologia", "Geografia", "Chemia", "Matematyka", "Fizyka", "Informatyka", "Historia"
-        ],
-        "środa": [
-            "Matematyka", "Fizyka", "W-F", "Informatyka", "Biologia", "Chemia", "Język polski", "Historia"
-        ],
-        "czwartek": [
-            "Geografia", "Matematyka", "Język angielski", "WOS", "Chemia", "Biologia", "Informatyka", "Historia"
-        ],
-        "piątek": [
-            "Matematyka", "Historia", "Informatyka", "Język polski", "Biologia", "Fizyka", "Geografia", "WOS"
-        ]
+        "poniedziałek": ["Matematyka","Polski","Historia","Biologia","Chemia","Fizyka","Informatyka","WF"],
+        "wtorek": ["Polski","Biologia","Geografia","Chemia","Matematyka","Fizyka","Informatyka","Historia"],
+        "środa": ["Matematyka","Fizyka","WF","Informatyka","Biologia","Chemia","Polski","Historia"],
+        "czwartek": ["Geografia","Matematyka","Angielski","WOS","Chemia","Biologia","Informatyka","Historia"],
+        "piątek": ["Matematyka","Historia","Informatyka","Polski","Biologia","Fizyka","Geografia","WOS"]
     },
-    "1B": {
-        "poniedziałek": [
-            "Angielski", "Matematyka", "Geografia", "WOS", "Język polski", "Chemia", "Historia", "Biologia"
-        ],
-        "wtorek": [
-            "Matematyka", "Język polski", "Biologia", "Chemia", "W-F", "Informatyka", "Geografia", "Historia"
-        ],
-        "środa": [
-            "WOS", "Matematyka", "Angielski", "Geografia", "Biologia", "Chemia", "Fizyka", "W-F"
-        ],
-        "czwartek": [
-            "Język polski", "Informatyka", "WOS", "Biologia", "Chemia", "Matematyka", "Historia", "Fizyka"
-        ],
-        "piątek": [
-            "Matematyka", "Geografia", "Język polski", "Fizyka", "Biologia", "Chemia", "W-F", "Informatyka"
-        ]
-    },
-    // Dodaj kolejne klasy w podobny sposób...
     "2A": {
-        "poniedziałek": [
-            "Język polski", "Matematyka", "Geografia", "Biologia", "Chemia", "W-F", "Informatyka", "Historia"
-        ],
-        "wtorek": [
-            "Historia", "Matematyka", "Angielski", "Biologia", "Chemia", "Fizyka", "Geografia", "W-F"
-        ],
-        "środa": [
-            "Matematyka", "Informatyka", "Język angielski", "WOS", "Geografia", "Chemia", "Biologia", "Fizyka"
-        ],
-        "czwartek": [
-            "Język polski", "WOS", "Historia", "Matematyka", "Chemia", "Geografia", "Biologia", "Informatyka"
-        ],
-        "piątek": [
-            "Język polski", "Matematyka", "W-F", "Historia", "Geografia", "Biologia", "Chemia", "Fizyka"
-        ]
-    },
-    // Dodaj pozostałe klasy w podobny sposób, zmieniając nazwy klas i plan lekcji...
-    "4E": {
-        "poniedziałek": [
-            "W-F", "Matematyka", "Język polski", "Informatyka", "Biologia", "Fizyka", "Chemia", "WOS"
-        ],
-        "wtorek": [
-            "Historia", "Matematyka", "W-F", "Informatyka", "Język angielski", "Biologia", "Chemia", "Fizyka"
-        ],
-        "środa": [
-            "Matematyka", "WOS", "Język polski", "Biologia", "Fizyka", "Chemia", "Informatyka", "Geografia"
-        ],
-        "czwartek": [
-            "Matematyka", "Geografia", "Informatyka", "WOS", "Fizyka", "Historia", "Biologia", "Chemia"
-        ],
-        "piątek": [
-            "Język polski", "W-F", "Matematyka", "Chemia", "Biologia", "Informatyka", "Fizyka", "Historia"
-        ]
+        "poniedziałek": ["Polski","Matematyka","Geografia","Biologia","Chemia","WF","Informatyka","Historia"],
+        "wtorek": ["Historia","Matematyka","Angielski","Biologia","Chemia","Fizyka","Geografia","WF"],
+        "środa": ["Matematyka","Informatyka","Angielski","WOS","Geografia","Chemia","Biologia","Fizyka"],
+        "czwartek": ["Polski","WOS","Historia","Matematyka","Chemia","Geografia","Biologia","Informatyka"],
+        "piątek": ["Polski","Matematyka","WF","Historia","Geografia","Biologia","Chemia","Fizyka"]
     }
+    // ← resztę klas możesz dopisać tak samo
 };
 
-// Funkcja do obliczenia następnej lekcji po przerwie
+// ===== SELECTY KLAS =====
+const classSelects = document.querySelectorAll(".class-select");
+
+classSelects.forEach(select => {
+    classes.forEach(cls => {
+        const option = document.createElement("option");
+        option.value = cls;
+        option.textContent = cls;
+        select.appendChild(option);
+    });
+
+    const index = select.dataset.index;
+
+    const saved = localStorage.getItem("selectedClass" + index);
+    if (saved) select.value = saved;
+
+    select.addEventListener("change", () => {
+        localStorage.setItem("selectedClass" + index, select.value);
+        getNextLesson();
+    });
+});
+
+// ===== GODZINA I DZIEŃ =====
+document.getElementById("time").addEventListener("input", getNextLesson);
+document.getElementById("day").addEventListener("change", getNextLesson);
+
+// ===== GŁÓWNA FUNKCJA =====
 function getNextLesson() {
-    const selectedClass = document.getElementById("class").value;
-    const selectedTime = document.getElementById("time").value;
-    const selectedDay = document.getElementById("day").value;
+    const time = document.getElementById("time").value;
+    const day = document.getElementById("day").value;
+
+    if (!time) return;
 
     const lessonTimes = [
-        "00:00", "08:05", "09:00", "09:55", "11:00", "11:55", "12:50", "13:45", "14:50", "23:59"
+        "00:00","08:05","09:00","09:55",
+        "11:00","11:55","12:50",
+        "13:45","14:50","23:59"
     ];
 
-    // Zamiana godziny na minutową wartość
-    const [hours, minutes] = selectedTime.split(":").map(Number);
-    const timeInMinutes = hours * 60 + minutes;
+    const [h, m] = time.split(":").map(Number);
+    const now = h * 60 + m;
 
-    // Znalezienie indeksu lekcji, która jest po wybranej godzinie
+    let index = -1;
     for (let i = 0; i < lessonTimes.length; i++) {
         const [lh, lm] = lessonTimes[i].split(":").map(Number);
-        const lessonTimeInMinutes = lh * 60 + lm;
-        
-        if (lessonTimeInMinutes > timeInMinutes) {
-            const nextLessonIndex = i-1;
-            const nextLesson = timetable[selectedClass][selectedDay][nextLessonIndex];
-            const prevLesson = timetable[selectedClass][selectedDay][nextLessonIndex-1];
-            document.getElementById("output").innerText = `${prevLesson} -> ${nextLesson}`;
-            return;
+        if (lh * 60 + lm > now) {
+            index = i - 1;
+            break;
         }
     }
 
-    document.getElementById("output").innerText = "Brak następnej lekcji w tym dniu.";
+    classSelects.forEach(select => {
+        const cls = select.value;
+        const out = document.getElementById("output-" + select.dataset.index);
+
+        if (!timetable[cls] || index < 1) {
+            out.textContent = "Brak lekcji";
+            return;
+        }
+
+        const prev = timetable[cls][day][index - 1];
+        const next = timetable[cls][day][index];
+
+        out.textContent = `${prev} → ${next}`;
+    });
 }
+
+// ===== URUCHOM NA START =====
+getNextLesson();

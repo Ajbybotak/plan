@@ -3,88 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wybór klasy i plan lekcji</title>
+    <title>Plan lekcji – 3 klasy</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
             background-color: #f4f4f9;
+            margin: 20px;
         }
-        label, select, input {
+
+        label {
+            font-weight: bold;
+        }
+
+        select, input {
             margin-bottom: 10px;
             font-size: 16px;
         }
-        button {
+
+        .class-box {
+            margin-bottom: 20px;
             padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
+            background: white;
+            border-radius: 6px;
         }
-        button:hover {
-            background-color: #45a049;
-        }
+
         .output {
-            margin-top: 20px;
+            margin-top: 5px;
             font-size: 18px;
             font-weight: bold;
+        }
+
+        hr {
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
-    <h1>Plan lekcji</h1>
-    
-    <!-- Wybór klasy -->
-    <label for="class">Wybierz klasę:</label>
-    <select id="class">
-        <option value="1A">1A</option>
-        <option value="1B">1B</option>
-        <option value="1C">1C</option>
-        <option value="1D">1D</option>
-        <option value="1E">1E</option>
-        <option value="2A">2A</option>
-        <option value="2B">2B</option>
-        <option value="2C">2C</option>
-        <option value="2D">2D</option>
-        <option value="2E">2E</option>
-        <option value="3A">3A</option>
-        <option value="3B">3B</option>
-        <option value="3C">3C</option>
-        <option value="3D">3D</option>
-        <option value="3E">3E</option>
-        <option value="4A">4A</option>
-        <option value="4B">4B</option>
-        <option value="4C">4C</option>
-        <option value="4D">4D</option>
-        <option value="4E">4E</option>
-    </select>
 
-    <br>
+<h1>Plan lekcji (3 klasy)</h1>
 
-    <!-- Ustawienie godziny -->
-    <label for="time">Podaj godzinę (np. 08:45):</label>
-    <input type="time" id="time">
+<!-- WSPÓLNE USTAWIENIA -->
+<label for="time">Godzina:</label><br>
+<input type="time" id="time"><br><br>
 
-    <br>
+<label for="day">Dzień tygodnia:</label><br>
+<select id="day">
+    <option value="poniedziałek">Poniedziałek</option>
+    <option value="wtorek">Wtorek</option>
+    <option value="środa">Środa</option>
+    <option value="czwartek">Czwartek</option>
+    <option value="piątek">Piątek</option>
+</select>
 
-    <!-- Wybór dnia -->
-    <label for="day">Wybierz dzień tygodnia:</label>
-    <select id="day">
-        <option value="poniedziałek">Poniedziałek</option>
-        <option value="wtorek">Wtorek</option>
-        <option value="środa">Środa</option>
-        <option value="czwartek">Czwartek</option>
-        <option value="piątek">Piątek</option>
-    </select>
+<hr>
 
-    <br>
+<!-- KLASA 1 -->
+<div class="class-box">
+    <label>Klasa 1:</label><br>
+    <select class="class-select" data-index="1"></select>
+    <div class="output" id="output-1"></div>
+</div>
 
-    <!-- Przycisk do obliczenia -->
-    <button onclick="getNextLesson()">Sprawdź następną lekcję</button>
+<!-- KLASA 2 -->
+<div class="class-box">
+    <label>Klasa 2:</label><br>
+    <select class="class-select" data-index="2"></select>
+    <div class="output" id="output-2"></div>
+</div>
 
-    <div class="output" id="output"></div>
+<!-- KLASA 3 -->
+<div class="class-box">
+    <label>Klasa 3:</label><br>
+    <select class="class-select" data-index="3"></select>
+    <div class="output" id="output-3"></div>
+</div>
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
