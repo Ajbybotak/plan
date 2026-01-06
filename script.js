@@ -123,3 +123,29 @@ function getNextLesson() {
 
 // ===== URUCHOM NA START =====
 setDefaultDateTime();
+
+// Rejestracja Service Workera
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then((registration) => {
+                console.log('Service Worker zarejestrowany:', registration);
+
+                // Sprawdzenie, czy jest nowa wersja Service Workera
+                registration.addEventListener('updatefound', () => {
+                    const newSW = registration.installing;
+                    newSW.addEventListener('statechange', () => {
+                        if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+                            // Jeśli jest nowa wersja, wyświetl komunikat
+                            alert('Nowa wersja aplikacji jest dostępna! Aplikacja zostanie zaktualizowana.');
+                            // Wymuś aktualizację cache
+                            newSW.postMessage({ action: 'skipWaiting' });
+                        }
+                    });
+                });
+            })
+            .catch((error) => {
+                console.log('Błąd przy rejestracji Service Workera:', error);
+            });
+    });
+}
