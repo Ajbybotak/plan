@@ -1,3 +1,16 @@
+// Funkcja zapisująca wybraną klasę w localStorage
+document.getElementById('class').addEventListener('change', function() {
+    localStorage.setItem('selectedClass', this.value);
+});
+
+// Funkcja do ustawienia wybranej klasy po załadowaniu strony
+window.onload = function() {
+    const savedClass = localStorage.getItem('selectedClass');
+    if (savedClass) {
+        document.getElementById('class').value = savedClass;
+    }
+};
+
 // Przykładowy plan lekcji dla klas na różne dni tygodnia
 const timetable = {
     "1A": {
