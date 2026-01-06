@@ -12,6 +12,11 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             background-color: #f4f4f9;
+            transform: scale(2);  /* Skalujemy stronę 2 razy */
+            transform-origin: top left;  /* Określamy punkt początkowy transformacji */
+            width: 100%;  /* Zachowujemy szerokość strony */
+            height: 100%;  /* Zachowujemy wysokość strony */
+            overflow: hidden;  /* Ukrywamy overflow, żeby nie było przewijania */
         }
 
         label, select, input {
