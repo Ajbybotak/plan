@@ -79,7 +79,7 @@ function getNextLesson() {
     const selectedDay = document.getElementById("day").value;
 
     const lessonTimes = [
-        "00:00", "08:05", "08:50", "09:45", "10:40", "11:45", "12:40", "13:35", "14:30", "15:35"
+        "00:00", "08:05", "09:00", "09:55", "11:00", "11:55", "12:50", "13:45", "14:50", "23:59"
     ];
 
     // Zamiana godziny na minutową wartość
