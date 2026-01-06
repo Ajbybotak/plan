@@ -1,6 +1,7 @@
 // Funkcja zapisująca wybraną klasę w localStorage
 document.getElementById('class').addEventListener('change', function() {
     localStorage.setItem('selectedClass', this.value);
+    getNextLesson(); // Od razu po zmianie klasy sprawdzamy następną lekcję
 });
 
 // Funkcja do ustawienia wybranej klasy po załadowaniu strony
@@ -8,8 +9,19 @@ window.onload = function() {
     const savedClass = localStorage.getItem('selectedClass');
     if (savedClass) {
         document.getElementById('class').value = savedClass;
+        getNextLesson(); // Uruchamiamy funkcję przy załadowaniu strony, jeśli klasa była zapisana
     }
 };
+
+// Funkcja zapisująca godzinę w localStorage i wywołująca getNextLesson
+document.getElementById('time').addEventListener('change', function() {
+    getNextLesson(); // Od razu po zmianie godziny sprawdzamy następną lekcję
+});
+
+// Funkcja zapisująca dzień w localStorage i wywołująca getNextLesson
+document.getElementById('day').addEventListener('change', function() {
+    getNextLesson(); // Od razu po zmianie dnia sprawdzamy następną lekcję
+});
 
 // Przykładowy plan lekcji dla klas na różne dni tygodnia
 const timetable = {
