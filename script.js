@@ -50,9 +50,26 @@ classSelects.forEach(select => {
     });
 });
 
-// ===== GODZINA I DZIEŃ =====
-document.getElementById("time").addEventListener("input", getNextLesson);
-document.getElementById("day").addEventListener("change", getNextLesson);
+// ===== AUTOMATYCZNE USTAWIENIE GODZINY I DNIA =====
+function setDefaultDateTime() {
+    const today = new Date();
+    
+    // Ustawienie dnia tygodnia
+    const daysOfWeek = ["poniedziałek", "wtorek", "środa", "czwartek", "piątek"];
+    const dayOfWeek = today.getDay(); // 0 - Niedziela, 1 - Poniedziałek itd.
+    
+    const currentDay = daysOfWeek[dayOfWeek - 1] || "poniedziałek"; // W przypadku niedzieli domyślnie poniedziałek
+
+    document.getElementById("day").value = currentDay;
+
+    // Ustawienie godziny na aktualną
+    const hours = today.getHours().toString().padStart(2, "0");
+    const minutes = today.getMinutes().toString().padStart(2, "0");
+    document.getElementById("time").value = `${hours}:${minutes}`;
+
+    // Od razu wywołanie funkcji, żeby zaktualizować lekcje
+    getNextLesson();
+}
 
 // ===== GŁÓWNA FUNKCJA =====
 function getNextLesson() {
@@ -105,4 +122,4 @@ function getNextLesson() {
 }
 
 // ===== URUCHOM NA START =====
-getNextLesson();
+setDefaultDateTime();

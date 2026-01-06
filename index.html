@@ -3,82 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plan lekcji – 3 klasy</title>
-
+    <title>Wybór klasy i plan lekcji</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
             margin: 20px;
+            background-color: #f4f4f9;
         }
 
-        label {
-            font-weight: bold;
-        }
-
-        select, input {
+        label, select, input {
             margin-bottom: 10px;
             font-size: 16px;
         }
 
-        .class-box {
-            margin-bottom: 20px;
+        button {
             padding: 10px;
-            background: white;
-            border-radius: 6px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
         }
 
         .output {
-            margin-top: 5px;
+            margin-top: 20px;
             font-size: 18px;
             font-weight: bold;
         }
 
-        hr {
-            margin: 20px 0;
+        /* Ukrywanie dnia i godziny */
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-
-<h1>Plan lekcji (3 klasy)</h1>
-
-<!-- WSPÓLNE USTAWIENIA -->
-<label for="time">Godzina:</label><br>
-<input type="time" id="time"><br><br>
-
-<label for="day">Dzień tygodnia:</label><br>
-<select id="day">
-    <option value="poniedziałek">Poniedziałek</option>
-    <option value="wtorek">Wtorek</option>
-    <option value="środa">Środa</option>
-    <option value="czwartek">Czwartek</option>
-    <option value="piątek">Piątek</option>
-</select>
-
-<hr>
-
-<!-- KLASA 1 -->
-<div class="class-box">
-    <label>Klasa 1:</label><br>
-    <select class="class-select" data-index="1"></select>
+    <h1>Plan lekcji</h1>
+    
+    <!-- Wybór klasy -->
+    <label for="class">Wybierz klasę 1:</label>
+    <select class="class-select" data-index="1" id="class"></select>
     <div class="output" id="output-1"></div>
-</div>
 
-<!-- KLASA 2 -->
-<div class="class-box">
-    <label>Klasa 2:</label><br>
-    <select class="class-select" data-index="2"></select>
+    <br>
+
+    <!-- Wybór klasy -->
+    <label for="class2">Wybierz klasę 2:</label>
+    <select class="class-select" data-index="2" id="class2"></select>
     <div class="output" id="output-2"></div>
-</div>
 
-<!-- KLASA 3 -->
-<div class="class-box">
-    <label>Klasa 3:</label><br>
-    <select class="class-select" data-index="3"></select>
+    <br>
+
+    <!-- Wybór klasy -->
+    <label for="class3">Wybierz klasę 3:</label>
+    <select class="class-select" data-index="3" id="class3"></select>
     <div class="output" id="output-3"></div>
-</div>
 
-<script src="script.js"></script>
+    <!-- Ukryte pola na godzinę i dzień -->
+    <input type="time" id="time" class="hidden">
+    <select id="day" class="hidden">
+        <option value="poniedziałek">Poniedziałek</option>
+        <option value="wtorek">Wtorek</option>
+        <option value="środa">Środa</option>
+        <option value="czwartek">Czwartek</option>
+        <option value="piątek">Piątek</option>
+    </select>
+
+    <script src="script.js"></script>
 </body>
 </html>
