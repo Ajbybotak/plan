@@ -9,26 +9,27 @@ const classes = [
 // ===== PLAN LEKCJI (SKRÓCONY PRZYKŁAD) =====
 const timetable = {
     "1A": {
-        "poniedziałek": ["Matematyka","Polski","Historia","Biologia","Chemia","Fizyka","Informatyka","WF"],
-        "wtorek": ["Polski","Biologia","Geografia","Chemia","Matematyka","Fizyka","Informatyka","Historia"],
-        "środa": ["Matematyka","Fizyka","WF","Informatyka","Biologia","Chemia","Polski","Historia"],
-        "czwartek": ["Geografia","Matematyka","Angielski","WOS","Chemia","Biologia","Informatyka","Historia"],
-        "piątek": ["Matematyka","Historia","Informatyka","Polski","Biologia","Fizyka","Geografia","WOS"]
+        "poniedziałek": ["Matematyka", "Polski", "Historia", "Biologia", "Chemia", "Fizyka", "Informatyka", "WF"],
+        "wtorek": ["Polski", "Biologia", "Geografia", "Chemia", "Matematyka", "Fizyka", "Informatyka", "Historia"],
+        "środa": ["Matematyka", "Fizyka", "WF", "Informatyka", "Biologia", "Chemia", "Polski", "Historia"],
+        "czwartek": ["Geografia", "Matematyka", "Angielski", "WOS", "Chemia", "Biologia", "Informatyka", "Historia"],
+        "piątek": ["Matematyka", "Historia", "Informatyka", "Polski", "Biologia", "Fizyka", "Geografia", "WOS"]
     },
     "2A": {
-        "poniedziałek": ["Polski","Matematyka","Geografia","Biologia","Chemia","WF","Informatyka","Historia"],
-        "wtorek": ["Historia","Matematyka","Angielski","Biologia","Chemia","Fizyka","Geografia","WF"],
-        "środa": ["Matematyka","Informatyka","Angielski","WOS","Geografia","Chemia","Biologia","Fizyka"],
-        "czwartek": ["Polski","WOS","Historia","Matematyka","Chemia","Geografia","Biologia","Informatyka"],
-        "piątek": ["Polski","Matematyka","WF","Historia","Geografia","Biologia","Chemia","Fizyka"]
+        "poniedziałek": ["Polski", "Matematyka", "Geografia", "Biologia", "Chemia", "WF", "Informatyka", "Historia"],
+        "wtorek": ["Historia", "Matematyka", "Angielski", "Biologia", "Chemia", "Fizyka", "Geografia", "WF"],
+        "środa": ["Matematyka", "Informatyka", "Angielski", "WOS", "Geografia", "Chemia", "Biologia", "Fizyka"],
+        "czwartek": ["Polski", "WOS", "Historia", "Matematyka", "Chemia", "Geografia", "Biologia", "Informatyka"],
+        "piątek": ["Polski", "Matematyka", "WF", "Historia", "Geografia", "Biologia", "Chemia", "Fizyka"]
     }
-    // ← resztę klas możesz dopisać tak samo
+    // Możesz dodać więcej klas w podobny sposób...
 };
 
 // ===== SELECTY KLAS =====
 const classSelects = document.querySelectorAll(".class-select");
 
 classSelects.forEach(select => {
+    // Wypełnienie opcji klas
     classes.forEach(cls => {
         const option = document.createElement("option");
         option.value = cls;
@@ -38,9 +39,11 @@ classSelects.forEach(select => {
 
     const index = select.dataset.index;
 
+    // Wczytanie zapisanej klasy z localStorage
     const saved = localStorage.getItem("selectedClass" + index);
     if (saved) select.value = saved;
 
+    // Zapis do localStorage po zmianie klasy
     select.addEventListener("change", () => {
         localStorage.setItem("selectedClass" + index, select.value);
         getNextLesson();
@@ -76,41 +79,30 @@ function getNextLesson() {
         }
     }
 
-    // Jeżeli godzina jest przed pierwszą lekcją
-    if (index === -1) {
-        classSelects.forEach(select => {
-            const cls = select.value;
-            const out = document.getElementById("output-" + select.dataset.index);
-
-            if (!timetable[cls]) {
-                out.textContent = "Brak lekcji";
-                return;
-            }
-
-            // Pierwsza lekcja
-            const firstLesson = timetable[cls][day][0];
-            out.textContent = `undefined -> ${firstLesson}`;
-        });
-        return;
-    }
-
-    // Jeśli lekcje są już po godzinie
     classSelects.forEach(select => {
         const cls = select.value;
         const out = document.getElementById("output-" + select.dataset.index);
 
-        if (!timetable[cls] || index < 1) {
-            out.textContent = "Brak lekcji";
+        // Przed pierwszą lekcją
+        if (index === -1) {
+            const firstLesson = timetable[cls][day][0];
+            out.textContent = `undefined -> ${firstLesson}`;
             return;
         }
 
+        // Po ostatniej lekcji
+        if (index >= lessonTimes.length - 2) {
+            const lastLesson = timetable[cls][day][timetable[cls][day].length - 1];
+            out.textContent = `${lastLesson} -> undefined`;
+            return;
+        }
+
+        // W trakcie lekcji
         const prev = timetable[cls][day][index - 1];
         const next = timetable[cls][day][index];
-
         out.textContent = `${prev} → ${next}`;
     });
 }
-
 
 // ===== URUCHOM NA START =====
 getNextLesson();
