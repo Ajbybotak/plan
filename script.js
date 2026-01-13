@@ -1,26 +1,30 @@
 // ===== LISTA KLAS =====
 const classes = [
-    "1A","1B","1C","1D","1E",
-    "2A","2B","2C","2D","2E",
-    "3A","3B","3C","3D","3E",
-    "4A","4B","4C","4D","4E"
+    "1A","2A","2C"
 ];
 
 // ===== PLAN LEKCJI (SKRÓCONY PRZYKŁAD) =====
 const timetable = {
-    "1A": {
-        "poniedziałek": ["Matematyka", "Polski", "Historia", "Biologia", "Chemia", "Fizyka", "Informatyka", "WF"],
-        "wtorek": ["Polski", "Biologia", "Geografia", "Chemia", "Matematyka", "Fizyka", "Informatyka", "Historia"],
-        "środa": ["Matematyka", "Fizyka", "WF", "Informatyka", "Biologia", "Chemia", "Polski", "Historia"],
-        "czwartek": ["Geografia", "Matematyka", "Angielski", "WOS", "Chemia", "Biologia", "Informatyka", "Historia"],
-        "piątek": ["Matematyka", "Historia", "Informatyka", "Polski", "Biologia", "Fizyka", "Geografia", "WOS"]
-    },
     "2A": {
-        "poniedziałek": ["Polski", "Matematyka", "Geografia", "Biologia", "Chemia", "WF", "Informatyka", "Historia"],
-        "wtorek": ["Historia", "Matematyka", "Angielski", "Biologia", "Chemia", "Fizyka", "Geografia", "WF"],
-        "środa": ["Matematyka", "Informatyka", "Angielski", "WOS", "Geografia", "Chemia", "Biologia", "Fizyka"],
-        "czwartek": ["Polski", "WOS", "Historia", "Matematyka", "Chemia", "Geografia", "Biologia", "Informatyka"],
-        "piątek": ["Polski", "Matematyka", "WF", "Historia", "Geografia", "Biologia", "Chemia", "Fizyka"]
+        "poniedziałek": ["POL 101", "CHEM 402", "BIOL 6", "WF", "ANG 404/INF 203", "MAT 304", "FIZ 203", "INF 203 / BRAK"],
+        "wtorek": ["HIS 306", "GEO 310", "ANG 404/ANG 204", "POL 102", "INF 203/BIOL 6", "BIOL 6/CHEM 208", "CHEM 208/INF 203", "NIEM 206/NIEM 309/FRAN 303/HISZ (bibl)/HISZ 110"],
+        "środa": ["WF", "WF", "MAT 304", "FIZ 109B", "NIEM 206/NIEM 309/FRAN 303/HISZ (bibl)/HISZ 110", "HIS 306", "GW 304", "BIZ 6"],
+        "czwartek": ["ANG 404/FIZ 206", "MAT 304", "MAT 304", "FIZ 104/ANG 204", "BIZ 106", "POL 104", "EO 307", "EO 307"],
+        "piątek": ["BRAK/INF 203", "POL 311", "MAT 304", "INF 203/ANG 204", "GEO 104", "REL 206", "BRAK", "BRAK"]
+    },
+    "2C": {
+        "poniedziałek": ["GEO 104", "MAT 110", "MAT 110", "NIEM 206/FRAN 401/HISZ (bibl)", "WF", "INF 103/ANG 105", "WG 208", "BRAK/INF 103"],
+        "wtorek": ["CHEM 208", "CHEM 208", "GEO 104", "NIEM 206/FRAN 401/HISZ (bibl)", "ANG 302/BIOL 312", "BIOL 312/ANG 106", "POL 107", "FIZ 109B"],
+        "środa": ["BIOL 312", "HIS 402", "ANG 302/CHEM 208", "CHEM 208/ANG 306", "POL 107", "MAT 110", "BIZ 101", "REL 301"],
+        "czwartek": ["MAT 110", "BIZ 106", "BIOL 312", "WF", "WF", "EO 306", "EO 306", "BRAK"],
+        "piątek": ["BIOL 312/BRAK", "CHEM 208/BIOL 312", "HIS 402", "MAT 110", "ANG 302/CHEM 208", "POL 107", "POL 107", "BRAK"]
+    },
+    "1A": {
+        "poniedziałek": ["", "", "", "", "", "", "", ""],
+        "wtorek": ["", "", "", "", "", "", "", ""],
+        "środa": ["", "", "", "", "", "", "", ""],
+        "czwartek": ["", "", "", "", "", "", "", ""],
+        "piątek": ["", "", "", "", "", "", "", ""]
     }
     // Możesz dodać więcej klas w podobny sposób...
 };
@@ -103,14 +107,14 @@ function getNextLesson() {
         // Przed pierwszą lekcją
         if (index === -1) {
             const firstLesson = timetable[cls][day][0];
-            out.textContent = `undefined -> ${firstLesson}`;
+            out.textContent = `${firstLesson}`;
             return;
         }
 
         // Po ostatniej lekcji
         if (index >= lessonTimes.length - 2) {
             const lastLesson = timetable[cls][day][timetable[cls][day].length - 1];
-            out.textContent = `${lastLesson} -> undefined`;
+            out.textContent = `${lastLesson}`;
             return;
         }
 
