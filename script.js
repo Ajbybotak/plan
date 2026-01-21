@@ -74,7 +74,31 @@ const timetable = {
         "środa": ["REL (studio)", "GW 108", "GEO 104", "WF", "BIOL 311", "ANG 106/EDB 109B", "EDB 109B/ANG 106", "BRAK"],
         "czwartek": ["BRAK", "MAT 209", "ANG 102/ANG 106", "GEO 304", "HIS 306", "NIEM 206/FRAN 401/FRAN 303/NIEM 309", "WF", "WF"],
         "piątek": ["MAT 209", "MAT 209", "GEO 109B", "POL 312", "POL 312", "INF 103/ANG 106", "BRAK", "BRAK"]
-    }
+    },
+
+    "2B": {
+        "poniedziałek": ["POL 107", "GW 301", "GEO 104", "WF", "MAT 301", "MAT 301", "ANG 404/ANG 402", "ANG 404/BRAK"],
+        "wtorek": ["BIOL 6/FIZ 109A", "GEO 104", "CHEM 208/BIOL 6", "FIZ 109A/CHEM 208", "HIS 307", "POL 107", "MAT 301", "NIEM 206/NIEM 309/FRAN 303/HISZ (bibl)/HISZ 110"],
+        "środa": ["WF", "WF", "BIOL 404", "INF 103/ANG 106", "NIEM 206/NIEM 309/FRAN 303/HISZ (bibl)/HISZ 110", "BIZ 109A", "POL 107", "BRAK"],
+        "czwartek": ["MAT 301", "MAT 301", "FIZ 109A", "BIZ 106", "CHEM 208", "POL 107", "ANG 404/ANG 6", "BRAK/INF 103"],
+        "piątek": ["BRAK", "MAT 301", "FIZ 109A", "HIS 307", "EO 306", "EO 306", "ANG 404/ANG 106", "REL 206"]
+    },
+
+    "2D": {
+        "poniedziałek": ["BIOL 311", "GEO 104", "MAT 310", "NIEM 206/FRAN 401/HISZ (bibl)", "WF", "POL 102", "POL 102", "REL (studio)"],
+        "wtorek": ["CHEM 207/INF 103", "FIZ 109B", "MAT 310", "NIEM 206/FRAN 401/HISZP (bibl)", "BIOL 311/CHEM 208", "ANG 302/BIOL 311", "GEO 104", "INF 103/ANG 204"],
+        "środa": ["POL 102", "MAT 310", "MAT 310", "BIZ 109A", "ANG 302/ANG 106", "HIS 402", "EO 306", "EO 306"],
+        "czwartek": ["BIZ 106", "CHEM 207", "CHEM 207", "WF", "WF", "BIOL 311", "BRAK", "BRAK"],
+        "piątek": ["POL 102", "MAT 310", "BIOL 311/CHEM 108", "GW 310", "HIS 402", "ANG 302/ANG 106", "CHEM 204/BIOL 311", "BRAK"]
+    },
+
+    "2G": {
+        "poniedziałek": ["HIS 402", "ANG 108/ANG 302", "GEO 107", "FRAN 303/NIEM 309", "POL 101", "POL 101", "MAT 205", "BRAK"],
+        "wtorek": ["GEO 310", "GW 302", "HIS 402", "MAT 205", "MAT 205", "CHEM 307/FIZ 109B", "FIZ 109B/CHEM 207", "REL (studio)"],
+        "środa": ["MAT 205", "POL 101", "BIZ 402", "GEO 104", "ANG 108/INF 103", "BIOL 311", "WF", "WF"],
+        "czwartek": ["GEO 104", "MAT 205", "MAT 205", "ANG 108/ANG 302", "INF 103/ANG 302", "BIZ 106", "FRAN 303/NIEM 309", "POL 101"],
+        "piątek": ["BRAK", "CHEM 104", "BIOL 312/ANG 302", "WF", "ANG 108/BIOL 311", "EO 402", "EO 402", "BRAK"]
+    },
 
 
     // Możesz dodać więcej klas w podobny sposób...
