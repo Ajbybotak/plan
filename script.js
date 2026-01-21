@@ -1,6 +1,6 @@
 // ===== LISTA KLAS =====
 const classes = [
-    "BRAK", "1A","1B", "1C", "1D", "1E", "1G", "2A","2C"
+    "BRAK", "1A","1B", "1C", "1D", "1E", "1G", "2A", "2B", "2C", "2D", "2G"
 ];
 
 // ===== PLAN LEKCJI (SKRÓCONY PRZYKŁAD) =====
@@ -98,7 +98,7 @@ const timetable = {
         "środa": ["MAT 205", "POL 101", "BIZ 402", "GEO 104", "ANG 108/INF 103", "BIOL 311", "WF", "WF"],
         "czwartek": ["GEO 104", "MAT 205", "MAT 205", "ANG 108/ANG 302", "INF 103/ANG 302", "BIZ 106", "FRAN 303/NIEM 309", "POL 101"],
         "piątek": ["BRAK", "CHEM 104", "BIOL 312/ANG 302", "WF", "ANG 108/BIOL 311", "EO 402", "EO 402", "BRAK"]
-    },
+    }
 
 
     // Możesz dodać więcej klas w podobny sposób...
